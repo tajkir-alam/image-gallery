@@ -24,7 +24,7 @@ const GalleryCard = ({
       ></div>
       <input
         type="checkbox"
-        checked={checked}
+        checked={selectedImages.includes(index)}
         onChange={() => {
           setChecked(!checked);
           handleImageSelection(index);
