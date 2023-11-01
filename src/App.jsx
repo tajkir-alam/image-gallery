@@ -1,35 +1,48 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [images, setImages] = useState([]);
+
+  useEffect(() => {
+    fetch("/imgFetch.json")
+      .then((res) => res.json())
+      .then((data) => setImages(data));
+  }, []);
+
+  console.log(images);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="container mx-auto p-10">
+      <div className="bg-white rounded-md">
+        <h3 className="p-4 text-4xl font-semibold">Gallery</h3>
+        <hr className="my-5 border" />
+        <div className="p-4 grid grid-cols-5 gap-5">
+          {images.map((image, index) => (
+            <div
+              key={index}
+              className={`relative group rounded-lg overflow-hidden ${
+                index === 0 && "col-span-2 row-span-2"
+              }`}
+            >
+              <img
+                src={image.src}
+                alt=""
+                className="border-2 rounded-lg"
+                draggable
+              />
+              <div className="absolute top-0 w-full h-full bg-black/20 opacity-0 group-hover:opacity-100 duration-300">
+                <input
+                  type="checkbox"
+                  className="m-2 border-white bg-white checkbox checkbox-primary"
+                />
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
