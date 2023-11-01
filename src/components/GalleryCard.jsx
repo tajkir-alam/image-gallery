@@ -3,9 +3,11 @@ import React, { useState } from "react";
 const GalleryCard = ({
   image,
   index,
+  selectedImages,
   handleImageSelection,
 }) => {
   const [checked, setChecked] = useState(false);
+  const isSelected = selectedImages.includes(index);
 
   return (
     <div
@@ -15,17 +17,22 @@ const GalleryCard = ({
       }`}
     >
       <img src={image.src} alt="" className="border-2 rounded-lg" draggable />
-      <div className="absolute top-0 w-full h-full bg-black/20 opacity-0 group-hover:opacity-100 duration-300">
-        <input
-          type="checkbox"
-          checked={checked}
-          onChange={() => {
-            setChecked(!checked);
-            handleImageSelection(index);
-          }}
-          className="m-4 bg-white checkbox checkbox-primary border-0 hover:border-0 rounded-none"
-        />
-      </div>
+      <div
+        className={`absolute top-0 w-full h-full bg-black/20 ${
+          isSelected ? "opacity-20" : "opacity-0"
+        } group-hover:opacity-100 duration-300`}
+      ></div>
+      <input
+        type="checkbox"
+        checked={checked}
+        onChange={() => {
+          setChecked(!checked);
+          handleImageSelection(index);
+        }}
+        className={`absolute inset-5 ${
+          isSelected ? "opacity-100" : "opacity-0"
+        } bg-white group-hover:opacity-100 checkbox checkbox-primary border-0 hover:border-0 rounded-none`}
+      />
     </div>
   );
 };

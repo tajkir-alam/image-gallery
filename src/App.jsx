@@ -16,6 +16,7 @@ function App() {
     });
   };
 
+
   useEffect(() => {
     fetch("/imgFetch.json")
       .then((res) => res.json())
@@ -45,6 +46,7 @@ function App() {
             <GalleryCard
               image={image}
               index={index}
+              selectedImages={selectedImages}
               setSelectedImages={setSelectedImages}
               handleImageSelection={handleImageSelection}
             />
