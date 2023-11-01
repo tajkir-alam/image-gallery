@@ -3,7 +3,6 @@ import React, { useState } from "react";
 const GalleryCard = ({
   image,
   index,
-  selectedImages,
   handleImageSelection,
 }) => {
   const [checked, setChecked] = useState(false);
