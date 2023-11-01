@@ -17,11 +17,20 @@ function App() {
   };
 
   const handleDelete = () => {
-    const updatedImages = images.filter((_, index) => !selectedImages.includes(index));
+    const updatedImages = images.filter(
+      (_, index) => !selectedImages.includes(index)
+    );
     setImages(updatedImages);
     setSelectedImages([]);
   };
-  
+
+  const handleDragStart = (index) => {
+    e.dataTransfer.setData("", index.toString());
+  };
+
+  const handleDragEnd = () => {
+    
+  };
 
   useEffect(() => {
     fetch("/imgFetch.json")
@@ -58,6 +67,8 @@ function App() {
               selectedImages={selectedImages}
               setSelectedImages={setSelectedImages}
               handleImageSelection={handleImageSelection}
+              handleDragStart={handleDragStart}
+              handleDragEnd={handleDragEnd}
             />
           ))}
         </div>

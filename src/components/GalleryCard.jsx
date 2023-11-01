@@ -5,6 +5,8 @@ const GalleryCard = ({
   index,
   selectedImages,
   handleImageSelection,
+  handleDragStart,
+  handleDragEnd,
 }) => {
   const [checked, setChecked] = useState(false);
   const isSelected = selectedImages.includes(index);
@@ -12,11 +14,17 @@ const GalleryCard = ({
   return (
     <div
       key={index}
+      onDragStart={(e) => {
+        e.dataTransfer.setData("text/plain", index.toString());
+        handleDragStart(index);
+      }}
+      onDragEnd={() => handleDragEnd()}
+      draggable
       className={`relative group rounded-lg overflow-hidden ${
         index === 0 && "col-span-2 row-span-2"
       }`}
     >
-      <img src={image.src} alt="" className="border-2 rounded-lg" draggable />
+      <img src={image.src} alt="" className="border-2 rounded-lg" />
       <div
         className={`absolute top-0 w-full h-full bg-black/20 ${
           isSelected ? "opacity-20" : "opacity-0"
