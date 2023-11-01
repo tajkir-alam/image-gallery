@@ -16,6 +16,12 @@ function App() {
     });
   };
 
+  const handleDelete = () => {
+    const updatedImages = images.filter((_, index) => !selectedImages.includes(index));
+    setImages(updatedImages);
+    setSelectedImages([]);
+  };
+  
 
   useEffect(() => {
     fetch("/imgFetch.json")
@@ -35,8 +41,11 @@ function App() {
                 } Selected`}
           </h3>
           {selectedImages.length > 0 && (
-            <button className="pr-5 text-red-500 font-semibold hover:underline">
-              Delete {selectedImages.length === 1 ? 'file' : 'files'}
+            <button
+              onClick={handleDelete}
+              className="pr-5 text-red-500 font-semibold hover:underline"
+            >
+              Delete {selectedImages.length === 1 ? "file" : "files"}
             </button>
           )}
         </div>
