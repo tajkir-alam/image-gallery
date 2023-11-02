@@ -21,7 +21,7 @@ const GalleryCard = ({
       onDragEnd={() => handleDragEnd()}
       draggable
       className={`relative group rounded-lg overflow-hidden ${index === 0 && "col-span-2 row-span-2"}`}    >
-      <img src={image.src} alt="" className={`border-2 rounded-lg ${index !== 0 && "h-[13.5rem] w-full"}`} />
+      <img src={image.src} alt="" className={`border-2 rounded-lg w-full`} />
       <div
         className={`absolute top-0 w-full h-full bg-black/20 ${isSelected ? "opacity-20" : "opacity-0"} group-hover:opacity-100 duration-300`}
       ></div>
