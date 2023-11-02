@@ -88,7 +88,7 @@ function App() {
     <div className="container mx-auto p-10">
       <div className="bg-white rounded-md">
         <div className="flex justify-between items-center">
-          <h3 className="p-4 text-4xl font-semibold">
+          <h3 className="p-4 text-xl lg:text-4xl font-semibold">
             {selectedImages.length === 0
               ? "Gallery"
               : `${selectedImages.length} ${selectedImages.length === 1 ? "File" : "Files"
