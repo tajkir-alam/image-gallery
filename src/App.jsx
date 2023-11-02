@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./App.css";
 import GalleryCard from "./components/GalleryCard";
 import { FaRegImage } from "react-icons/fa";
@@ -6,7 +6,9 @@ import { FaRegImage } from "react-icons/fa";
 function App() {
   const [images, setImages] = useState([]);
   const [selectedImages, setSelectedImages] = useState([]);
+  const imageUploadRef = useRef(null);
 
+  // Selecting images and storing in a state
   const handleImageSelection = (index) => {
     setSelectedImages((prevIndices) => {
       if (prevIndices.includes(index)) {
@@ -17,6 +19,23 @@ function App() {
     });
   };
 
+  // opening file manager to get image
+  const handleUplaodImage = () => {
+    if (imageUploadRef) {
+      imageUploadRef.current.click();
+    }
+  }
+
+  const handleImage = (e) => {
+    let image = e.target.files[0];
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      setImages([...images, { src: e.target.result }])
+    };
+    reader.readAsDataURL(image);
+  }
+
+  // image delete function
   const handleDelete = () => {
     const updatedImages = images.filter((_, index) => !selectedImages.includes(index));
     setImages(updatedImages);
@@ -32,6 +51,8 @@ function App() {
     console.log("drag end");
   };
 
+
+  // Fetching images 
   useEffect(() => {
     fetch("/imgFetch.json")
       .then((res) => res.json())
@@ -70,10 +91,20 @@ function App() {
               handleDragEnd={handleDragEnd}
             />
           ))}
-          <div className={`${images.length === 0 && "col-span-2 row-span-2 h-[24rem]"} h-[13.5rem] flex flex-col justify-center items-center rounded-lg bg-black/5 border-2 border-dashed border-black/20 space-y-3 cursor-pointer scale-100 active:scale-95 duration-300`}>
+          <button onClick={handleUplaodImage}
+            className={`${images.length === 0 && "col-span-2 row-span-2 h-[24rem]"} ${images.length === 1 && 'h-[13.5rem]'} h-[13.5rem] flex flex-col justify-center items-center rounded-lg bg-black/5 border-2 border-dashed border-black/20 space-y-3 cursor-pointer scale-100 active:scale-95 duration-300`}>
             <span className="text-2xl"><FaRegImage /></span>
             <p className="text-xl">Add Images</p>
-          </div>
+
+            {/* Hidden Input for uploading Image */}
+            <input
+              type="file"
+              ref={imageUploadRef}
+              onChange={handleImage}
+              accept="image/*"
+              className="hidden"
+            />
+          </button>
         </div>
       </div>
     </div>
