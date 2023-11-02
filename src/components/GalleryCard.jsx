@@ -17,7 +17,7 @@ const GalleryCard = ({
   const isSelected = selectedImages.includes(index);
 
   const handleDragEnter = () => {
-    if (isDragging && hoverIndex !== null && hoverIndex !== index) {
+    if (isDragging && hoverIndex !== null) {
       handleDrop(index);
     }
   };
@@ -31,11 +31,11 @@ const GalleryCard = ({
       onDragOver={handleDragOver}
       onDrop={() => handleDrop(index)}
       draggable
-      className={`relative group rounded-lg overflow-hidden ${index === 0 && "col-span-2 row-span-2"} ${isDragging && index === draggingIndex ? "opacity-10" : ""}`}
+      className={`relative group rounded-lg overflow-hidden cursor-grab ${index === 0 && "lg:col-span-2 lg:row-span-2"} ${isDragging && index === draggingIndex ? "opacity-50" : ""}`}
     >
       <img src={image.src} alt="" className={`border-2 rounded-lg w-full`} />
       <div
-        className={`absolute top-0 w-full h-full bg-black/20 ${isSelected ? "opacity-20" : "opacity-0"} group-hover:opacity-100 duration-300`}
+        className={`absolute top-0 w-full h-full bg-black/20 group-hover:opacity-100 duration-300 ${isSelected ? "opacity-20" : "opacity-0"}`}
       ></div>
       <input
         type="checkbox"

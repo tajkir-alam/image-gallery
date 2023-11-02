@@ -56,7 +56,6 @@ function App() {
   };
 
   const handleDrop = (toIndex) => {
-    if (draggingIndex === null) return;
     if (isDragging) {
       const updatedImages = [...images];
       const [draggedImage] = updatedImages.splice(draggingIndex, 1);
@@ -68,7 +67,7 @@ function App() {
   };
 
   const handleDragOver = (e) => {
-    e.preventDefault();
+    e.preventDefault()
   };
 
   const handleDragEnd = () => {
@@ -105,7 +104,7 @@ function App() {
           )}
         </div>
         <hr className="my-5 border" />
-        <div className="p-4 grid grid-cols-5 gap-5">
+        <div className="p-4 grid grid-cols-2 lg:grid-cols-5 gap-5 duration-300">
           {images.map((image, index) => (
             <GalleryCard
               image={image}
