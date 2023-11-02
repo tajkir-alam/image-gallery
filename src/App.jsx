@@ -8,7 +8,7 @@ function App() {
   const [selectedImages, setSelectedImages] = useState([]);
   const imageUploadRef = useRef(null);
 
-  // DND state and var.
+  // DND
   const [draggingIndex, setDraggingIndex] = useState(null);
   const [hoverIndex, setHoverIndex] = useState(null);
   const isDragging = draggingIndex !== null;
@@ -55,14 +55,9 @@ function App() {
     setDraggingIndex(index);
   };
 
-  const handleDragEnd = () => {
-    setDraggingIndex(null);
-    setHoverIndex(null);
-  };
-
   const handleDrop = (toIndex) => {
     if (draggingIndex === null) return;
-    if (draggingIndex !== toIndex) {
+    if (isDragging) {
       const updatedImages = [...images];
       const [draggedImage] = updatedImages.splice(draggingIndex, 1);
       updatedImages.splice(toIndex, 0, draggedImage);
@@ -72,12 +67,16 @@ function App() {
     setHoverIndex(null);
   };
 
-  const handleDragOver = (e, toIndex) => {
+  const handleDragOver = (e) => {
     e.preventDefault();
-    setHoverIndex(toIndex);
   };
 
-  // Drag And Drop Function Start
+  const handleDragEnd = () => {
+    setDraggingIndex(null);
+    setHoverIndex(null);
+  };
+
+  // Drag And Drop Function End
 
   // Fetching images 
   useEffect(() => {

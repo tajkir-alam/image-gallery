@@ -28,10 +28,10 @@ const GalleryCard = ({
       onDragStart={() => handleDragStart(index)}
       onDragEnd={handleDragEnd}
       onDragEnter={handleDragEnter}
-      onDragOver={(e) => handleDragOver(e, index)}
+      onDragOver={handleDragOver}
       onDrop={() => handleDrop(index)}
       draggable
-      className={`relative group rounded-lg overflow-hidden ${index === 0 && "col-span-2 row-span-2"} ${isDragging && index === draggingIndex ? "opacity-90" : ""}`}
+      className={`relative group rounded-lg overflow-hidden ${index === 0 && "col-span-2 row-span-2"} ${isDragging && index === draggingIndex ? "opacity-10" : ""}`}
     >
       <img src={image.src} alt="" className={`border-2 rounded-lg w-full`} />
       <div
