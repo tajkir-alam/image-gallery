@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import GalleryCard from "./components/GalleryCard";
+import { FaRegImage } from "react-icons/fa";
 
 function App() {
   const [images, setImages] = useState([]);
@@ -17,19 +18,18 @@ function App() {
   };
 
   const handleDelete = () => {
-    const updatedImages = images.filter(
-      (_, index) => !selectedImages.includes(index)
-    );
+    const updatedImages = images.filter((_, index) => !selectedImages.includes(index));
     setImages(updatedImages);
     setSelectedImages([]);
   };
 
-  const handleDragStart = (index) => {
-    e.dataTransfer.setData("", index.toString());
+  const handleDragStart = (e, index) => {
+    // e.dataTransfer.setData("", index.toString());
+    console.log(e);
   };
 
   const handleDragEnd = () => {
-    
+    console.log("drag end");
   };
 
   useEffect(() => {
@@ -45,9 +45,8 @@ function App() {
           <h3 className="p-4 text-4xl font-semibold">
             {selectedImages.length === 0
               ? "Gallery"
-              : `${selectedImages.length} ${
-                  selectedImages.length === 1 ? "File" : "Files"
-                } Selected`}
+              : `${selectedImages.length} ${selectedImages.length === 1 ? "File" : "Files"
+              } Selected`}
           </h3>
           {selectedImages.length > 0 && (
             <button
@@ -71,6 +70,10 @@ function App() {
               handleDragEnd={handleDragEnd}
             />
           ))}
+          <div className={`rounded-lg bg-black/5 border-2 border-dashed border-black/20 p-5 text-white ${images.length === 0 && "col-span-2 row-span-2"}`}>
+            <span><FaRegImage /></span>
+            <p>Add Images</p>
+          </div>
         </div>
       </div>
     </div>
