@@ -70,9 +70,9 @@ function App() {
               handleDragEnd={handleDragEnd}
             />
           ))}
-          <div className={`rounded-lg bg-black/5 border-2 border-dashed border-black/20 p-5 text-white ${images.length === 0 && "col-span-2 row-span-2"}`}>
-            <span><FaRegImage /></span>
-            <p>Add Images</p>
+          <div className={`${images.length === 0 && "col-span-2 row-span-2 h-[24rem]"} h-[13.5rem] flex flex-col justify-center items-center rounded-lg bg-black/5 border-2 border-dashed border-black/20 space-y-3 cursor-pointer scale-100 active:scale-95 duration-300`}>
+            <span className="text-2xl"><FaRegImage /></span>
+            <p className="text-xl">Add Images</p>
           </div>
         </div>
       </div>
