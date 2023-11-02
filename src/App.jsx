@@ -8,6 +8,11 @@ function App() {
   const [selectedImages, setSelectedImages] = useState([]);
   const imageUploadRef = useRef(null);
 
+  // DND state and var.
+  const [draggingIndex, setDraggingIndex] = useState(null);
+  const [hoverIndex, setHoverIndex] = useState(null);
+  const isDragging = draggingIndex !== null;
+
   // Selecting images and storing in a state
   const handleImageSelection = (index) => {
     setSelectedImages((prevIndices) => {
@@ -26,6 +31,7 @@ function App() {
     }
   }
 
+  // adding image to show on UI
   const handleImage = (e) => {
     let image = e.target.files[0];
     const reader = new FileReader();
@@ -42,15 +48,36 @@ function App() {
     setSelectedImages([]);
   };
 
-  const handleDragStart = (e, index) => {
-    // e.dataTransfer.setData("", index.toString());
-    console.log(e);
+
+  // Drag And Drop Function Start
+
+  const handleDragStart = (index) => {
+    setDraggingIndex(index);
   };
 
   const handleDragEnd = () => {
-    console.log("drag end");
+    setDraggingIndex(null);
+    setHoverIndex(null);
   };
 
+  const handleDrop = (toIndex) => {
+    if (draggingIndex === null) return;
+    if (draggingIndex !== toIndex) {
+      const updatedImages = [...images];
+      const [draggedImage] = updatedImages.splice(draggingIndex, 1);
+      updatedImages.splice(toIndex, 0, draggedImage);
+      setImages(updatedImages);
+    }
+    setDraggingIndex(null);
+    setHoverIndex(null);
+  };
+
+  const handleDragOver = (e, toIndex) => {
+    e.preventDefault();
+    setHoverIndex(toIndex);
+  };
+
+  // Drag And Drop Function Start
 
   // Fetching images 
   useEffect(() => {
@@ -89,6 +116,11 @@ function App() {
               handleImageSelection={handleImageSelection}
               handleDragStart={handleDragStart}
               handleDragEnd={handleDragEnd}
+              handleDrop={handleDrop}
+              handleDragOver={handleDragOver}
+              isDragging={isDragging}
+              draggingIndex={draggingIndex}
+              hoverIndex={hoverIndex}
             />
           ))}
           <button onClick={handleUplaodImage}
