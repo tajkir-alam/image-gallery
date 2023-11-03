@@ -7,11 +7,7 @@ function App() {
   const [images, setImages] = useState([]);
   const [selectedImages, setSelectedImages] = useState([]);
   const imageUploadRef = useRef(null);
-
-  // DND
-  const [draggingIndex, setDraggingIndex] = useState(null);
-  const [hoverIndex, setHoverIndex] = useState(null);
-  const isDragging = draggingIndex !== null;
+  const [draggedImage, setDraggedImage] = useState(null);
 
   // Selecting images and storing in a state
   const handleImageSelection = (index) => {
@@ -49,33 +45,27 @@ function App() {
   };
 
 
-  // Drag And Drop Function Start
-
-  const handleDragStart = (index) => {
-    setDraggingIndex(index);
+  // ----- DND functions Start
+  const handleDragStart = (e, index) => {
+    e.dataTransfer.setData("text/plain", index);
+    setDraggedImage(index);
   };
 
-  const handleDrop = (toIndex) => {
-    if (isDragging) {
+  const handleDragOver = (e, index) => {
+    e.preventDefault();
+    if (draggedImage !== null && draggedImage !== index) {
       const updatedImages = [...images];
-      const [draggedImage] = updatedImages.splice(draggingIndex, 1);
-      updatedImages.splice(toIndex, 0, draggedImage);
+      const [draggedItem] = updatedImages.splice(draggedImage, 1);
+      updatedImages.splice(index, 0, draggedItem);
       setImages(updatedImages);
+      setDraggedImage(index);
     }
-    setDraggingIndex(null);
-    setHoverIndex(null);
-  };
-
-  const handleDragOver = (e) => {
-    e.preventDefault()
   };
 
   const handleDragEnd = () => {
-    setDraggingIndex(null);
-    setHoverIndex(null);
+    setDraggedImage(null);
   };
-
-  // Drag And Drop Function End
+  // ----- DND functions End
 
   // Fetching images 
   useEffect(() => {
@@ -105,22 +95,18 @@ function App() {
         </div>
         <hr className="my-5 border" />
         <div className="p-4 grid grid-cols-2 lg:grid-cols-5 gap-5 duration-300">
-          {images.map((image, index) => (
+          {images.map((image, index) =>
             <GalleryCard
+              key={index}
               image={image}
               index={index}
               selectedImages={selectedImages}
-              setSelectedImages={setSelectedImages}
               handleImageSelection={handleImageSelection}
               handleDragStart={handleDragStart}
-              handleDragEnd={handleDragEnd}
-              handleDrop={handleDrop}
               handleDragOver={handleDragOver}
-              isDragging={isDragging}
-              draggingIndex={draggingIndex}
-              hoverIndex={hoverIndex}
+              handleDragEnd={handleDragEnd}
             />
-          ))}
+          )}
           <button onClick={handleUplaodImage}
             className={`${images.length === 0 && "col-span-2 row-span-2 h-[24rem]"} ${images.length === 1 && 'h-[13.5rem]'} h-[13.5rem] flex flex-col justify-center items-center rounded-lg bg-black/5 border-2 border-dashed border-black/20 space-y-3 cursor-pointer scale-100 active:scale-95 duration-300`}>
             <span className="text-2xl"><FaRegImage /></span>
