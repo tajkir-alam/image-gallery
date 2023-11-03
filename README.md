@@ -6,7 +6,7 @@ This front-end website Called Image Gallery.
 
 ## Live Link
 
-https://task-management-web-app-tajkir.web.app/
+https://image-gallery-project-dnd.netlify.app/
 
 ## Technology & Packages:
     1. React.Js
